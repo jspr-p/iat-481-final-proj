@@ -63,5 +63,7 @@ def split_test_val():
             shutil.move(src_path, dst_path)
             count = count + 1
 
-#splitimg_80_20()
-#split_test_val()
+if __name__ == "__main__": #Ensure the code is only run when intended from this file.
+    #splitimg_80_20()
+    #split_test_val()
+    print('Splitting complete.')
