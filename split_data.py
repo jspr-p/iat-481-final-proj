@@ -8,10 +8,10 @@ import glob
 import shutil
 import random
 
-src = '/Users/jaspe/Documents/GitHub/iat481-computer-vision/full_alphabet_data/asl_alphabet_train'
-train = '/Users/jaspe/Documents/GitHub/iat481-computer-vision/full_alphabet_data/asl_alphabet_train'
-test = '/Users/jaspe/Documents/GitHub/iat481-computer-vision/full_alphabet_data/asl_alphabet_test'
-val = '/Users/jaspe/Documents/GitHub/iat481-computer-vision/full_alphabet_data/asl_alphabet_val'
+src = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_train'
+train = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_train'
+test = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_test'
+val = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_val'
 
 # MOVE 600/3000 IMAGES TO TEST FOLDERS
 def splitimg_80_20():
@@ -26,7 +26,7 @@ def splitimg_80_20():
             src_path = src_imgs[count]
             dst_path = test + '/' + letter +'/' + os.path.basename(src_path)
             #dst_path = test + '/' + letter +'/' + letter + str(count) + '.jpg'
-            #print(dst_path);
+            # print(dst_path);
             shutil.move(src_path, dst_path)
             count = count+1
 
@@ -44,7 +44,7 @@ def renumber_imgs():
     for letter in classes:
         src_folder = os.path.join(src, letter)
         src_imgs = glob.glob(src_folder+'/*.jpg')
-        iterator = 1;
+        iterator = 1
         for img in src_imgs:
             # print(train+'/'+letter+'/'+letter+str(iterator)+'.jpg')
             os.rename(img, train+'/'+letter+'/'+letter+str(iterator)+'.jpg')
@@ -54,11 +54,14 @@ def split_test_val():
     for letter in classes:
         src_folder = test + '/' + letter
         src_imgs = glob.glob(src_folder+'/*.jpg')
-        for src_path in src_imgs:
-            img_num = int(os.path.splitext(os.path.basename(src_path))[0][1:])
-            if (img_num > 300):
-                dst_path = val + '/' + letter +'/' + letter + 'val' + str(img_num-300) + '.jpg'
-                shutil.move(src_path, dst_path)
 
-splitimg_80_20()
+        random.shuffle(src_imgs)
+        count=1
+        while count <= 300:
+            src_path = src_imgs[count]
+            dst_path = val + '/' + letter +'/' + os.path.basename(src_path)
+            shutil.move(src_path, dst_path)
+            count = count + 1
+
+#splitimg_80_20()
 #split_test_val()
