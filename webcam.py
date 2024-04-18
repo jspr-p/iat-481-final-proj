@@ -5,6 +5,7 @@ from ultralytics import YOLO
 from cvzone.HandTrackingModule import HandDetector;
 import torch as t
 import threading
+import time
 
 capture = cv2.VideoCapture(1) #You may need to change the number based on which webcam you are using.
 detector = HandDetector(maxHands=1) 
@@ -15,6 +16,9 @@ imgSize= 200
 asl_model = YOLO('runs/classify/train5/weights/best.pt')
 classes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
+enableSave = True
+counter=0
+saveFolder = 'incomingData/unsorted'
 # target_img = np.ones((imgSize,imgSize,3),np.uint8)*255
         
 def predict(im):
@@ -71,5 +75,9 @@ if __name__ == '__main__':
 
         if success:
             cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
+        if key==ord('s'):
+            counter = counter+1
+            cv2.imwrite(f'{saveFolder}/Image_{time.time()}.jpg', imgWhite)
+            print(counter)
     
