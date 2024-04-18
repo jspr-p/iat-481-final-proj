@@ -5,19 +5,20 @@ from ultralytics import YOLO
 from cvzone.HandTrackingModule import HandDetector
 import time
 
+# You will need to install cv2, cvzone, mediapipe, numpy and ultralytics if not already installed on your device.
+
 capture = cv2.VideoCapture(0) #You may need to change the number based on which webcam you are using.
 detector = HandDetector(maxHands=1) 
 
 offset = 50
 imgSize= 200
 
-asl_model = YOLO('runs/classify/train6/weights/best.pt')
+asl_model = YOLO('runs/classify/traindefault/weights/best.pt')
 classes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 enableSave = False
 counter=0
 saveFolder = 'incomingData/unsorted'
-# target_img = np.ones((imgSize,imgSize,3),np.uint8)*255
         
 def predict(im):
     prediction = asl_model(im)
@@ -66,13 +67,13 @@ if __name__ == '__main__':
                 
                 imgW, imgH, c = img.shape
                 print(imgW)
-                cv2.putText(img, predict(imgWhite), (50, 50), cv2.FONT_HERSHEY_COMPLEX,2, (5,0,0), 2)
+                cv2.putText(img, predict(imgWhite), (5, 50), cv2.FONT_HERSHEY_COMPLEX,2, (5,0,0), 2)
                 
-                cv2.putText(imgWhite, predict(imgWhite), (5, 50), cv2.FONT_HERSHEY_COMPLEX,2, (5,0,0), 2)
+                cv2.putText(imgWhite, predict(imgWhite), (5, 50), cv2.FONT_HERSHEY_COMPLEX,2, (100,0,0), 2)
                 # target_img = imgWhite
                 # thread.join()
                 # cv2.imshow("ImageCrop", imgCrop)
-                cv2.imshow("ImgWhite", imgWhite)
+                # cv2.imshow("ImgWhite", imgWhite)
 
         if success:
             cv2.imshow("Image", img)
