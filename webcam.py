@@ -13,7 +13,7 @@ detector = HandDetector(maxHands=1)
 offset = 50
 imgSize= 200
 
-asl_model = YOLO('runs/classify/traindefault/weights/best.pt')
+asl_model = YOLO('runs/classify/train0015/weights/best.pt')
 classes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 enableSave = False
