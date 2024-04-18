@@ -2,12 +2,10 @@ import cv2
 import numpy as np
 import math
 from ultralytics import YOLO
-from cvzone.HandTrackingModule import HandDetector;
-import torch as t
-import threading
+from cvzone.HandTrackingModule import HandDetector
 import time
 
-capture = cv2.VideoCapture(1) #You may need to change the number based on which webcam you are using.
+capture = cv2.VideoCapture(0) #You may need to change the number based on which webcam you are using.
 detector = HandDetector(maxHands=1) 
 
 offset = 50
@@ -16,7 +14,7 @@ imgSize= 200
 asl_model = YOLO('runs/classify/train5/weights/best.pt')
 classes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
-enableSave = True
+enableSave = False
 counter=0
 saveFolder = 'incomingData/unsorted'
 # target_img = np.ones((imgSize,imgSize,3),np.uint8)*255
@@ -67,7 +65,8 @@ if __name__ == '__main__':
                     
                 
                 imgW, imgH, c = img.shape
-                cv2.putText(img, predict(imgWhite), (imgW-30, imgH-30), cv2.FONT_HERSHEY_COMPLEX,2, (255,100,100), 2)
+                print(imgW)
+                cv2.putText(img, predict(imgWhite), (0, 0), cv2.FONT_HERSHEY_COMPLEX,2, (255,100,100), 2)
                 # target_img = imgWhite
                 # thread.join()
                 # cv2.imshow("ImageCrop", imgCrop)
@@ -75,9 +74,10 @@ if __name__ == '__main__':
 
         if success:
             cv2.imshow("Image", img)
+            
         key = cv2.waitKey(1)
-        if key==ord('s'):
-            counter = counter+1
+        if enableSave & key==ord('s'):
+            # counter = counter+1
             cv2.imwrite(f'{saveFolder}/Image_{time.time()}.jpg', imgWhite)
-            print(counter)
+            # print(counter)
     
