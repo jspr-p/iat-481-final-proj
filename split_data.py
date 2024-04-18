@@ -8,10 +8,12 @@ import glob
 import shutil
 import random
 
-src = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/src'
-train = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/train'
-test = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/test'
-val = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/val'
+src_folder = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/incomingData'
+train = src_folder +'/train'
+test = src_folder +'/test'
+val = src_folder +'/val'
+src = train
+
 
 # MOVE 600/3000 IMAGES TO TEST FOLDERS
 def splitimg_80_20():
@@ -22,7 +24,7 @@ def splitimg_80_20():
 
         #RANDOMLY TAKE 600/3000 
         random.shuffle(src_imgs)
-        while count <= 6:
+        while count <= 3:
             src_path = src_imgs[count]
             dst_path = test + '/' + letter +'/' + os.path.basename(src_path)
             #dst_path = test + '/' + letter +'/' + letter + str(count) + '.jpg'
@@ -57,7 +59,7 @@ def split_test_val():
 
         random.shuffle(src_imgs)
         count=1
-        while count <= 3:
+        while count <= 1:
             src_path = src_imgs[count]
             dst_path = val + '/' + letter +'/' + os.path.basename(src_path)
             shutil.move(src_path, dst_path)
