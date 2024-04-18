@@ -9,7 +9,7 @@ import threading
 capture = cv2.VideoCapture(1) #You may need to change the number based on which webcam you are using.
 detector = HandDetector(maxHands=1) 
 
-offset = 25
+offset = 50
 imgSize= 200
 
 asl_model = YOLO('runs/classify/train5/weights/best.pt')
@@ -42,18 +42,28 @@ if __name__ == '__main__':
                 if aspectRatio > 1:
                     k = imgSize/h
                     wCal = math.ceil(k*w)
+                    wGap = math.ceil((imgSize-wCal)/2)
                     imgResize = cv2.resize(imgCrop, (wCal, imgSize))
                     imgResizeShape = imgResize.shape
-                    imgWhite[0:imgResizeShape[0],0:imgResizeShape[1]] = imgResize
+                    try:
+                        imgWhite[:,wGap:wCal+wGap] = imgResize
+                    except:
+                        imgWhite[0:imgResizeShape[0],0:imgResizeShape[1]]
 
                 elif aspectRatio < 1:
                     k = imgSize/w
                     hCal = math.ceil(k*h)
+                    hGap = math.ceil((imgSize-h)/2)
                     imgResize = cv2.resize(imgCrop, (imgSize, hCal))
                     imgResizeShape = imgResize.shape
-                    imgWhite[0:imgResizeShape[0],0:imgResizeShape[1]] = imgResize
+                    try:
+                        imgWhite[hGap:hCal+hGap,:] = imgResize
+                    except:
+                        imgWhite[0:imgResizeShape[0],0:imgResizeShape[1]] = imgResize
                     
-                cv2.putText(img, predict(imgWhite), (x, y-20), cv2.FONT_HERSHEY_COMPLEX,2, (0,0,0), 2)
+                
+                imgW, imgH, c = img.shape
+                cv2.putText(img, predict(imgWhite), (imgW-30, imgH-30), cv2.FONT_HERSHEY_COMPLEX,2, (255,100,100), 2)
                 # target_img = imgWhite
                 # thread.join()
                 # cv2.imshow("ImageCrop", imgCrop)

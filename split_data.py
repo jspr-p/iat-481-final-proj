@@ -8,10 +8,10 @@ import glob
 import shutil
 import random
 
-src = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_train'
-train = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_train'
-test = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_test'
-val = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/full_alphabet_data/asl_alphabet_val'
+src = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/src'
+train = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/train'
+test = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/test'
+val = '/Users/jaspe/Documents/GitHub/iat-481-final-proj/seconddataset/val'
 
 # MOVE 600/3000 IMAGES TO TEST FOLDERS
 def splitimg_80_20():
@@ -22,7 +22,7 @@ def splitimg_80_20():
 
         #RANDOMLY TAKE 600/3000 
         random.shuffle(src_imgs)
-        while count <= 600:
+        while count <= 6:
             src_path = src_imgs[count]
             dst_path = test + '/' + letter +'/' + os.path.basename(src_path)
             #dst_path = test + '/' + letter +'/' + letter + str(count) + '.jpg'
@@ -57,13 +57,13 @@ def split_test_val():
 
         random.shuffle(src_imgs)
         count=1
-        while count <= 300:
+        while count <= 3:
             src_path = src_imgs[count]
             dst_path = val + '/' + letter +'/' + os.path.basename(src_path)
             shutil.move(src_path, dst_path)
             count = count + 1
 
 if __name__ == "__main__": #Ensure the code is only run when intended from this file.
-    #splitimg_80_20()
-    #split_test_val()
+    splitimg_80_20()
+    split_test_val()
     print('Splitting complete.')
