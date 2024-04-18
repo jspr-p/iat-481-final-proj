@@ -11,7 +11,7 @@ detector = HandDetector(maxHands=1)
 offset = 50
 imgSize= 200
 
-asl_model = YOLO('runs/classify/train5/weights/best.pt')
+asl_model = YOLO('runs/classify/train6/weights/best.pt')
 classes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 enableSave = False
@@ -66,7 +66,9 @@ if __name__ == '__main__':
                 
                 imgW, imgH, c = img.shape
                 print(imgW)
-                cv2.putText(img, predict(imgWhite), (0, 0), cv2.FONT_HERSHEY_COMPLEX,2, (255,100,100), 2)
+                cv2.putText(img, predict(imgWhite), (50, 50), cv2.FONT_HERSHEY_COMPLEX,2, (5,0,0), 2)
+                
+                cv2.putText(imgWhite, predict(imgWhite), (5, 50), cv2.FONT_HERSHEY_COMPLEX,2, (5,0,0), 2)
                 # target_img = imgWhite
                 # thread.join()
                 # cv2.imshow("ImageCrop", imgCrop)
